@@ -12,14 +12,14 @@ class app extends Component {
     ],
   };
 
-  handleIncrement = (habit) => {
+  onIncrement = (habit) => {
     const habits = [...this.state.habits];
     const index = habits.indexOf(habit);
     habits[index].count++;
     this.setState({ habits });
   };
 
-  handleDecrement = (habit) => {
+  onDecrement = (habit) => {
     const habits = [...this.state.habits];
     const index = habits.indexOf(habit);
     const count = habits[index].count - 1;
@@ -27,21 +27,35 @@ class app extends Component {
     this.setState({ habits });
   };
 
-  handleDelete = (habit) => {
+  onDelete = (habit) => {
     const habits = this.state.habits.filter((item) => item.id !== habit.id);
     this.setState({ habits });
   };
+  onAdd = (name) => {
+    const habits = [
+      ...this.state.habits,
+      { id: Date.now(), name: name, count: 0 },
+    ];
+    this.setState({ habits });
+  };
+
+  handleReset = () => {
+    const Habits = this.state.habits.map((item) => {
+      return (item.count = 0);
+    });
+    this.setState({ Habits });
+  };
 
   render() {
-    // console.log(this.state.habits);
     return (
       <div>
-        {/* <Navbar /> */}
         <Habits
           habits={this.state.habits}
-          onIncrement={this.handleIncrement}
-          onDecrement={this.handleDecrement}
-          onDelete={this.handleDelete}
+          onIncrement={this.onIncrement}
+          onDecrement={this.onDecrement}
+          onDelete={this.onDelete}
+          onAdd={this.onAdd}
+          handleReset={this.handleReset}
         />
       </div>
     );
